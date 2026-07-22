@@ -435,10 +435,11 @@ Cellular Modem Manager implements comprehensive TR-181 data model support for ce
 ```
 Device.
 └── Cellular.
-    ├── RoamingEnabled (boolean, R/W)
-    ├── RoamingStatus (string, R)
     ├── X_RDK_Enable (boolean, R/W)
     ├── X_RDK_Status (string, R)
+    ├── X_RDK_Model (string, R)
+    ├── X_RDK_HardwareRevision (string, R)
+    ├── X_RDK_Vendor (string, R)
     ├── InterfaceNumberOfEntries (unsignedInt, R)
     ├── AccessPointNumberOfEntries (unsignedInt, R)
     └── Interface.{i}.
@@ -453,6 +454,10 @@ Device.
         ├── SupportedAccessTechnologies (string, R)
         ├── PreferredAccessTechnologies (string, R/W)
         ├── CurrentAccessTechnology (string, R)
+        ├── X_RDK_PlmnAccess.RoamingEnable (boolean, R)
+        ├── X_RDK_PlmnAccess.RoamingStatus (string, R)
+        ├── X_RDK_PlmnAccess.NetworkInUse.Mcc (string, R)
+        ├── X_RDK_PlmnAccess.NetworkInUse.Mnc (string, R)
         ├── X_RDK_PlmnAccess.NetworkInUse.Name (string, R)
         ├── RSSI (int, R)
         ├── RSRP (int, R)
@@ -460,21 +465,21 @@ Device.
         ├── X_RDK_SNR (int, R)
         ├── X_RDK_PhyConnectedStatus (boolean, R)
         ├── X_RDK_LinkAvailableStatus (boolean, R)
-        ├── USIM.
-        │   ├── Status (string, R)
-        │   ├── IMSI (string, R)
-        │   ├── ICCID (string, R)
-        │   ├── MSISDN (string, R)
-        │   └── PINCheck (string, R/W)
-        ├── AccessPoint.{i}.
+        ├── X_RDK_Identification.
+        │   ├── Imei (string, R)
+        │   └── Iccid (string, R)
+        ├── Device.Cellular.AccessPoint.{i}.
         │   ├── Enable (boolean, R/W)
         │   ├── Alias (string, R/W)
-        │   ├── APN (string, R/W)
+        │   ├── Apn (string, R/W)
         │   ├── Username (string, R/W)
         │   ├── Password (string, R/W)
         │   ├── X_RDK_ApnAuthentication (string, R/W)
         │   ├── X_RDK_IpAddressFamily (string, R/W)
-        │   └── X_RDK_Roaming (boolean, R/W)
+        │   ├── X_RDK_Roaming (boolean, R/W)
+        │   ├── X_RDK_DefaultProfile (boolean, R/W)
+        │   ├── X_RDK_ProfileId (unsignedInt, R)
+        │   └── X_RDK_PdpInterfaceConfig (string, R/W)
         └── X_RDK_Statistics.
             ├── BytesSent (unsignedLong, R)
             ├── BytesReceived (unsignedLong, R)
