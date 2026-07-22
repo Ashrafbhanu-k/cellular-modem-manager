@@ -301,7 +301,7 @@ The `udev_eventhandler_thread` monitors the `net` subsystem for interface add/re
 - **RDK-B Components**: `CcspPandM`, `CcspPsm`, `WebPA`, `CcspCommonLibrary`
 - **HAL Dependencies**: Cellular HAL APIs with backend selected by build flag: `libqmi-glib` (QMI_SUPPORT), `libmm-glib` + ModemManager daemon (MM_SUPPORT / HYBRID modem path), `libusb` + `libudev` (HYBRID_SUPPORT)
 - **ModemManager**: Required for `MM_SUPPORT` (default) and `HYBRID_SUPPORT` with `FEATURE_MODEM_HAL`; provides `libmm-glib` client library and `org.freedesktop.ModemManager1` D-Bus service
-- **Systemd Services**: `CcspCrSsp.service`, `PsmSsp.service` must be active before `RdkCellularManager.service` starts
+- **Systemd Services**: `utopia.service`, `CcspCrSsp.service`, `PsmSsp.service`, `RdkWanManager.service` must be active before `RdkCellularManager.service` starts
 - **R-BUS**: R-BUS registration under cellular namespace for event publishing and parameter access
 - **TR-181 Data Model**: `Device.Cellular` object hierarchy implementation for interface management and statistics
 - **Configuration Files**: `RdkCellularManager.xml` for TR-181 parameter definitions located in component configuration directory
@@ -481,11 +481,14 @@ Device.
         │   ├── X_RDK_ProfileId (unsignedInt, R)
         │   └── X_RDK_PdpInterfaceConfig (string, R/W)
         └── X_RDK_Statistics.
-            ├── BytesSent (unsignedLong, R)
-            ├── BytesReceived (unsignedLong, R)
-            ├── PacketsSent (unsignedLong, R)
-            ├── PacketsReceived (unsignedLong, R)
-            └── PacketsDropped (unsignedLong, R)
+            ├── BytesSent (unsignedInt, R)
+            ├── BytesReceived (unsignedInt, R)
+            ├── PacketsSent (unsignedInt, R)
+            ├── PacketsReceived (unsignedInt, R)
+            ├── PacketsSentDrop (unsignedInt, R)
+            ├── PacketsReceivedDrop (unsignedInt, R)
+            ├── UpStreamMaxBitRate (unsignedInt, R)
+            └── DownStreamMaxBitRate (unsignedInt, R)
 ```
 
 ## Internal Modules
@@ -521,12 +524,12 @@ Cellular Modem Manager maintains extensive interactions with RDK-B middleware co
 
 **Major events Published by Cellular Modem Manager:**
 
-| Event Name                 | Event Topic/Path                             | Trigger Condition                            | Subscriber Components                   |
-| -------------------------- | -------------------------------------------- | -------------------------------------------- | --------------------------------------- |
-| Interface_Status_Change    | `Device.Cellular.Interface.{i}.Status`       | Cellular interface operational status change | CcspPandM, WebPA, Monitoring Services   |
-| Phy_Connection_Status_Change | `Device.Cellular.Interface.{i}.X_RDK_PhyConnectedStatus` | Physical modem/network interface connection state change | WAN Manager, Monitoring Services   |
-| Signal_Quality_Update        | `Device.Cellular.Interface.{i}.RSSI`                    | Radio signal quality metrics update                      | Network Analytics, Telemetry Collection |
-| Cellular_State_Change        | `Device.Cellular.X_RDK_Status`                          | State machine / connection state change                  | WAN Manager, Routing Services      |
+| Event Name                   | Event Topic/Path                                         | Trigger Condition                                        | Subscriber Components                   |
+| ---------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | --------------------------------------- |
+| Interface_Status_Change      | `Device.Cellular.Interface.{i}.Status`                   | Cellular interface operational status change             | CcspPandM, WebPA, Monitoring Services   |
+| Phy_Connection_Status_Change | `Device.Cellular.Interface.{i}.X_RDK_PhyConnectedStatus` | Physical modem/network interface connection state change | WAN Manager, Monitoring Services        |
+| Signal_Quality_Update        | `Device.Cellular.Interface.{i}.RSSI`                     | Radio signal quality metrics update                      | Network Analytics, Telemetry Collection |
+| Cellular_State_Change        | `Device.Cellular.X_RDK_Status`                           | State machine / connection state change                  | WAN Manager, Routing Services           |
 
 ### IPC Flow Patterns
 
