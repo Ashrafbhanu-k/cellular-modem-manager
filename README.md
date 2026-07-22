@@ -445,11 +445,11 @@ Device.
     └── Interface.{i}.
         ├── Enable (boolean, R/W)
         ├── Status (string, R)
-        ├── Alias (string, R/W)
+        ├── Alias (string, R)
         ├── Name (string, R)
         ├── LastChange (unsignedInt, R)
         ├── LowerLayers (string, R/W)
-        ├── Upstream (boolean, R)
+        ├── Upstream (boolean, R/W) (not present when WAN_MANAGER_UNIFICATION_ENABLED is enabled)
         ├── IMEI (string, R)
         ├── SupportedAccessTechnologies (string, R)
         ├── PreferredAccessTechnologies (string, R/W)
