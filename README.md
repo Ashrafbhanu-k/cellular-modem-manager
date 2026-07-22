@@ -437,6 +437,8 @@ Device.
 └── Cellular.
     ├── RoamingEnabled (boolean, R/W)
     ├── RoamingStatus (string, R)
+    ├── X_RDK_Enable (boolean, R/W)
+    ├── X_RDK_Status (string, R)
     ├── InterfaceNumberOfEntries (unsignedInt, R)
     ├── AccessPointNumberOfEntries (unsignedInt, R)
     └── Interface.{i}.
@@ -449,15 +451,15 @@ Device.
         ├── Upstream (boolean, R)
         ├── IMEI (string, R)
         ├── SupportedAccessTechnologies (string, R)
-        ├── PreferredAccessTechnology (string, R/W)
+        ├── PreferredAccessTechnologies (string, R/W)
         ├── CurrentAccessTechnology (string, R)
-        ├── NetworkInUse (string, R)
+        ├── X_RDK_PlmnAccess.NetworkInUse.Name (string, R)
         ├── RSSI (int, R)
         ├── RSRP (int, R)
         ├── RSRQ (int, R)
-        ├── SNR (int, R)
-        ├── X_RDK_Status (string, R)
-        ├── X_RDK_LinkAvailability (string, R)
+        ├── X_RDK_SNR (int, R)
+        ├── X_RDK_PhyConnectedStatus (boolean, R)
+        ├── X_RDK_LinkAvailableStatus (boolean, R)
         ├── USIM.
         │   ├── Status (string, R)
         │   ├── IMSI (string, R)
@@ -517,9 +519,9 @@ Cellular Modem Manager maintains extensive interactions with RDK-B middleware co
 | Event Name                 | Event Topic/Path                             | Trigger Condition                            | Subscriber Components                   |
 | -------------------------- | -------------------------------------------- | -------------------------------------------- | --------------------------------------- |
 | Interface_Status_Change    | `Device.Cellular.Interface.{i}.Status`       | Cellular interface operational status change | CcspPandM, WebPA, Monitoring Services   |
-| Registration_Status_Change | `Device.Cellular.Interface.{i}.NetworkInUse` | Network registration state transition        | Connection Manager, Telemetry Services  |
-| Signal_Quality_Update      | `Device.Cellular.Interface.{i}.RSSI`         | Radio signal quality metrics update          | Network Analytics, Telemetry Collection |
-| Connection_State_Change    | `Device.Cellular.Interface.{i}.X_RDK_Status` | Packet data connection state change          | WAN Manager, Routing Services           |
+| Phy_Connection_Status_Change | `Device.Cellular.Interface.{i}.X_RDK_PhyConnectedStatus` | Physical modem/network interface connection state change | WAN Manager, Monitoring Services   |
+| Signal_Quality_Update        | `Device.Cellular.Interface.{i}.RSSI`                    | Radio signal quality metrics update                      | Network Analytics, Telemetry Collection |
+| Cellular_State_Change        | `Device.Cellular.X_RDK_Status`                          | State machine / connection state change                  | WAN Manager, Routing Services      |
 
 ### IPC Flow Patterns
 
