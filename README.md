@@ -380,7 +380,7 @@ During normal operation, Cellular Modem Manager responds to various modem events
 
 **Context Switching Scenarios:**
 
-- State machine transitions between DOWN, DEACTIVATED, DEREGISTERED, REGISTERING, REGISTERED, and CONNECTED states based on modem and network conditions
+- State machine transitions between DOWN, DEACTIVATED, DEREGISTERED, REGISTERED, and CONNECTED states based on modem and network conditions
 - Protocol switching between QMI, ModemManager, or hybrid backends based on detected modem capabilities during initialization
 - IP address family context switches between IPv4-only, IPv6-only, or dual-stack operation based on profile configuration and network support
 
@@ -607,8 +607,8 @@ Cellular Modem Manager integrates with Cellular HAL APIs to abstract vendor-spec
 
 ### Key Implementation Logic
 
-- **State Machine Engine**: Policy control state machine implemented in `cellularmgr_sm.c` manages cellular interface lifecycle through predefined states (DOWN, DEACTIVATED, DEREGISTERED, REGISTERING, REGISTERED, CONNECTED) with 500ms loop interval executing state-specific logic and transition functions based on modem status and configuration
-  - State handlers process current state conditions and determine next state transitions: `StateDown()`, `StateDeactivated()`, `StateDeregistered()`, `StateRegistering()`, `StateRegistered()`, `StateConnected()`
+- **State Machine Engine**: Policy control state machine implemented in `cellularmgr_sm.c` manages cellular interface lifecycle through predefined states (DOWN, DEACTIVATED, DEREGISTERED, REGISTERED, CONNECTED) with 500ms loop interval executing state-specific logic and transition functions based on modem status and configuration
+  - State handlers process current state conditions and determine next state transitions: `StateDown()`, `StateDeactivated()`, `StateDeregistered()`, `StateRegistered()`, `StateConnected()`
   - Transition functions perform operations required for state changes including HAL API invocations and event notifications: `TransitionDown()`, `TransitionDeactivated()`, `TransitionDeregistered()`, `TransitionRegistering()`, `TransitionRegistered()`, `TransitionConnected()`
   - State machine thread executes continuously polling modem status and configuration changes to drive autonomous state transitions in `CellularMgr_StateMachine_Thread()`
 
